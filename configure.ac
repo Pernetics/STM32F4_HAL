@@ -16,6 +16,11 @@ ARCH_FLAGS=" -mcpu=cortex-m4 -mthumb -mfloat-abi=soft"
 AC_PROG_CC
 AM_PROG_CC_C_O
 
+AC_CHECK_PROGS([DOXYGEN], [doxygen])
+if test -z "$DOXYGEN";
+   then AC_MSG_WARN([Doxygen not found - continuing without Doxygen support])
+fi
+
 AC_MSG_CHECKING(debug build)
 AC_ARG_ENABLE([debug],
               [AS_HELP_STRING([--enable-debug=[[yes/no]]],
@@ -65,4 +70,7 @@ fi
 CFLAGS+=" $ARCH_FLAGS $DEBUG_FLAGS -D$HAL_TARGET $HSE_VALUE_OVERRIDE"
 
 AC_CONFIG_FILES(Makefile)
+AM_CONDITIONAL([HAVE_DOXYGEN], 
+[test -n "$DOXYGEN"])AM_COND_IF([HAVE_DOXYGEN], [AC_CONFIG_FILES([docs/doxyfile docs/Makefile])])
+
 AC_OUTPUT

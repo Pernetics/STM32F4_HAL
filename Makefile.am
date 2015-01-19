@@ -130,6 +130,12 @@ libSTM32F4_HAL_a_SOURCES = \
     src/stm32f4xx_ll_sdmmc.c \
     src/stm32f4xx_ll_usb.c
 
+if HAVE_DOXYGEN
+  DOXYDIR = docs
+endif
+
+SUBDIRS = . $(DOXYDIR)
+
 # Copy header files from "$srcdir/include" directory to "$DESTDIR/include/STM32F4"
 # directory while preserving original directory tree structure.
 install-data-local:
